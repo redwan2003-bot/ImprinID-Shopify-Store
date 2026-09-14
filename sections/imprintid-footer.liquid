@@ -1,0 +1,131 @@
+<footer class="ii-footer">
+  <div class="ii-footer__main">
+    <div class="ii-footer__shell">
+      <div class="ii-footer__intro">
+        <a class="ii-footer__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+          {% if section.settings.logo != blank %}
+            {{ section.settings.logo | image_url: width: 420 | image_tag: widths: '180, 280, 420', loading: 'lazy', alt: shop.name }}
+          {% else %}
+            <span>imprint</span><strong>ID</strong>
+          {% endif %}
+        </a>
+        <p>{{ section.settings.description }}</p>
+        {% form 'customer', class: 'ii-footer__newsletter' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label for="ii-footer-email-{{ section.id }}">{{ section.settings.newsletter_label }}</label>
+          <div>
+            <input id="ii-footer-email-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" placeholder="Email address" autocomplete="email" required>
+            <button type="submit">Subscribe</button>
+          </div>
+          {% if form.posted_successfully? %}<p role="status">Thanks for subscribing.</p>{% endif %}
+          {% if form.errors %}<p role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{% endif %}
+        {% endform %}
+      </div>
+
+      <div class="ii-footer__column">
+        <h2>{{ section.settings.info_heading }}</h2>
+        <a href="/pages/about-us">About Us</a>
+        <a href="/pages/contact">Contact</a>
+        <a href="/pages/faqs">FAQs</a>
+        <a href="/policies/privacy-policy">Privacy</a>
+        <a href="/pages/artwork-information">Artwork Information</a>
+        <a href="/pages/ordering-information">Ordering Information</a>
+        <a href="/pages/product-video">Product Video</a>
+        <a href="{{ routes.collections_url }}/proud-planet">Proud Planet</a>
+      </div>
+
+      <div class="ii-footer__column">
+        <h2>{{ section.settings.account_heading }}</h2>
+        <a href="/pages/wishlist">My Wishlist</a>
+        <a href="{{ routes.account_url }}">Edit Profile</a>
+        <h2 class="ii-footer__subheading">{{ section.settings.social_heading }}</h2>
+        <div class="ii-footer__socials">
+          {% if settings.social_facebook_link != blank %}<a href="{{ settings.social_facebook_link }}" aria-label="Facebook">f</a>{% endif %}
+          {% if settings.social_instagram_link != blank %}<a href="{{ settings.social_instagram_link }}" aria-label="Instagram">◎</a>{% endif %}
+          {% if settings.social_youtube_link != blank %}<a href="{{ settings.social_youtube_link }}" aria-label="YouTube">▶</a>{% endif %}
+          {% if settings.social_pinterest_link != blank %}<a href="{{ settings.social_pinterest_link }}" aria-label="Pinterest">p</a>{% endif %}
+        </div>
+      </div>
+
+      <div class="ii-footer__column">
+        <h2>{{ section.settings.tools_heading }}</h2>
+        <a href="/pages/create-flyer">Create Flyer</a>
+        <a href="/pages/sales-flyer">Sales Flyer</a>
+        <a href="/pages/order-catalog">Order Catalog</a>
+        <a href="/pages/submit-a-po">Submit a PO</a>
+        <a href="/pages/view-catalog">View Catalog</a>
+        <a href="/pages/stock-designs">Stock Designs</a>
+        <a href="/pages/track-order">Track Order</a>
+        <a href="/pages/events-industries">Events &amp; Industries</a>
+      </div>
+    </div>
+  </div>
+  <div class="ii-footer__bottom">
+    <div class="ii-footer__shell ii-footer__bottom-inner">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <div>
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        {% if section.settings.association_text != blank %}<span>{{ section.settings.association_text }}</span>{% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .ii-footer { color: #fff; font-family: Arial, Helvetica, sans-serif; }
+  .ii-footer * { box-sizing: border-box; }
+  .ii-footer__main { padding: 66px 0 54px; background: #292b2e; }
+  .ii-footer__shell { width: min(var(--ii-shell, 1490px), calc(100% - 96px)); margin-inline: auto; }
+  .ii-footer__main .ii-footer__shell { display: grid; grid-template-columns: 1.35fr repeat(3, 1fr); gap: clamp(34px, 5vw, 86px); }
+  .ii-footer__logo { display: inline-flex; align-items: center; color: #fff; font-size: 34px; font-weight: 800; letter-spacing: -.06em; text-decoration: none; }
+  .ii-footer__logo strong { color: #79b7db; }
+  .ii-footer__logo img { max-width: 230px; max-height: 65px; width: auto; height: auto; object-fit: contain; }
+  .ii-footer__intro > p { max-width: 380px; margin: 22px 0; color: #c5c7c9; font-size: 13px; line-height: 1.65; }
+  .ii-footer__column { display: grid; align-content: start; gap: 10px; }
+  .ii-footer__column h2 { margin: 0 0 12px; color: #fff; font-size: 15px; text-transform: uppercase; letter-spacing: .04em; }
+  .ii-footer__column .ii-footer__subheading { margin-top: 24px; }
+  .ii-footer__column > a { color: #c8c9ca; font-size: 13px; text-decoration: none; }
+  .ii-footer__column > a:hover { color: #fff; text-decoration: underline; }
+  .ii-footer__newsletter label { display: block; margin-bottom: 9px; font-size: 13px; font-weight: 700; }
+  .ii-footer__newsletter > div { display: flex; max-width: 390px; }
+  .ii-footer__newsletter input { min-width: 0; flex: 1; padding: 12px 13px; border: 1px solid #686b70; background: #fff; color: #202124; }
+  .ii-footer__newsletter button { padding: 0 16px; border: 0; background: var(--ii-blue, #398aca); color: #fff; font-weight: 800; cursor: pointer; }
+  .ii-footer__newsletter p { font-size: 12px; }
+  .ii-footer__socials { display: flex; gap: 8px; }
+  .ii-footer__socials a { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid #696c70; border-radius: 50%; color: #fff; text-decoration: none; font-weight: 800; }
+  .ii-footer__bottom { background: #202225; border-top: 1px solid #3b3d40; }
+  .ii-footer__bottom-inner { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 24px; color: #aeb0b3; font-size: 12px; }
+  .ii-footer__bottom-inner > div { display: flex; align-items: center; gap: 24px; }
+  .ii-footer__bottom a { color: #d8d9da; }
+  @media (max-width: 900px) {
+    .ii-footer__shell { width: min(100% - 40px, var(--ii-shell, 1490px)); }
+    .ii-footer__main .ii-footer__shell { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .ii-footer__shell { width: min(100% - 28px, var(--ii-shell, 1490px)); }
+    .ii-footer__main { padding-top: 46px; }
+    .ii-footer__main .ii-footer__shell { grid-template-columns: 1fr; }
+    .ii-footer__bottom-inner { padding: 20px 0; align-items: flex-start; flex-direction: column; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "ImprintID footer",
+  "tag": "section",
+  "class": "section-footer",
+  "limit": 1,
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Promotional products, custom branding and distributor tools built to help your business stand out." },
+    { "type": "text", "id": "newsletter_label", "label": "Newsletter label", "default": "Get product news and special offers" },
+    { "type": "text", "id": "info_heading", "label": "Information heading", "default": "Info & FAQs" },
+    { "type": "text", "id": "account_heading", "label": "Account heading", "default": "My Account" },
+    { "type": "text", "id": "social_heading", "label": "Social heading", "default": "Get Connected" },
+    { "type": "text", "id": "tools_heading", "label": "Tools heading", "default": "Distributor Tools" },
+    { "type": "text", "id": "association_text", "label": "Association text", "default": "PPAI member" }
+  ],
+  "presets": [{ "name": "ImprintID footer" }]
+}
+{% endschema %}

@@ -1,0 +1,357 @@
+{% liquid
+  assign category_menu = section.settings.category_menu
+  assign meeting_url = section.settings.meeting_url | default: routes.root_url
+%}
+
+<div class="ii-header" data-ii-header>
+  <div class="ii-announcement">
+    <div class="ii-shell ii-announcement__inner">
+      <div class="ii-announcement__message">
+        <span>{{ section.settings.announcement_text }}</span>
+        {% if section.settings.announcement_link_label != blank %}
+          <a href="{{ section.settings.announcement_link | default: routes.root_url }}">{{ section.settings.announcement_link_label }}</a>
+        {% endif %}
+      </div>
+      <div class="ii-announcement__tools">
+        <details class="ii-utility-menu">
+          <summary>{{ section.settings.utility_label }}</summary>
+          <div class="ii-utility-menu__panel">
+            <a href="/pages/create-flyer">Create Flyer</a>
+            <a href="/pages/sales-flyer">Sales Flyer</a>
+            <a href="/pages/order-catalog">Order Catalog</a>
+            <a href="/pages/submit-a-po">Submit a PO</a>
+            <a href="/pages/view-catalog">View Catalog</a>
+            <a href="/pages/stock-designs">Stock Designs</a>
+            <a href="/pages/events-industries">Events &amp; Industries</a>
+          </div>
+        </details>
+        <span class="ii-announcement__divider" aria-hidden="true"></span>
+        <a class="ii-account" href="{{ routes.account_url }}" aria-label="Account">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ii-mainbar">
+    <div class="ii-shell ii-mainbar__inner">
+      <button class="ii-mobile-toggle" type="button" aria-expanded="false" aria-controls="ii-mobile-nav-{{ section.id }}" data-ii-mobile-toggle>
+        <span></span><span></span><span></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+
+      <a class="ii-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 420 | image_tag: widths: '180, 240, 320, 420', width: section.settings.logo_width, loading: 'eager', alt: shop.name }}
+        {% else %}
+          <span class="ii-logo__imprint">imprint</span><span class="ii-logo__id">ID</span>
+        {% endif %}
+      </a>
+
+      <div class="ii-categories">
+        <button class="ii-categories__trigger" type="button" aria-expanded="false" data-ii-mega-trigger>
+          {{ section.settings.categories_label }}
+          <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1 5 5 5-5"/></svg>
+        </button>
+        <div class="ii-mega" data-ii-mega hidden>
+          <div class="ii-mega__tabs" role="tablist" aria-label="Product categories">
+            {% for link in category_menu.links %}
+              <a class="ii-mega__tab{% if forloop.first %} is-active{% endif %}" href="{{ link.url }}" data-ii-tab="{{ forloop.index0 }}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                {{ link.title }}
+              </a>
+            {% endfor %}
+          </div>
+          <div class="ii-mega__content">
+            {% for link in category_menu.links %}
+              <div class="ii-mega__panel{% if forloop.first %} is-active{% endif %}" data-ii-panel="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+                {% if link.links.size > 0 %}
+                  {% for childlink in link.links %}
+                    <div class="ii-mega__group">
+                      <a class="ii-mega__heading" href="{{ childlink.url }}">{{ childlink.title }}</a>
+                      {% for grandchildlink in childlink.links %}
+                        <a href="{{ grandchildlink.url }}">{{ grandchildlink.title }}</a>
+                      {% endfor %}
+                      {% if childlink.links.size > 0 %}<a class="ii-mega__view" href="{{ childlink.url }}">View All</a>{% endif %}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="ii-mega__empty">
+                    <strong>{{ link.title }}</strong>
+                    <a href="{{ link.url }}">Shop this category</a>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          <aside class="ii-mega__promo">
+            <a href="{{ section.settings.mega_promo_link | default: routes.all_products_collection_url }}">
+              {% if section.settings.mega_promo_image != blank %}
+                {{ section.settings.mega_promo_image | image_url: width: 600 | image_tag: widths: '300, 450, 600', loading: 'lazy', alt: section.settings.mega_promo_title }}
+              {% else %}
+                <span class="ii-mega__promo-placeholder">{{ section.settings.mega_promo_title }}</span>
+              {% endif %}
+              <span>{{ section.settings.mega_promo_title }}</span>
+            </a>
+          </aside>
+        </div>
+      </div>
+
+      <nav class="ii-brandnav" aria-label="Brand navigation">
+        {% for block in section.blocks %}
+          {% if block.type == 'brand_link' %}
+            <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+              {% if block.settings.logo != blank %}
+                {{ block.settings.logo | image_url: width: 220 | image_tag: widths: '110, 160, 220', loading: 'eager', alt: block.settings.label }}
+              {% else %}
+                <span class="ii-brandnav__wordmark">{{ block.settings.label }}</span>
+              {% endif %}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+
+      <form class="ii-search" action="{{ routes.search_url }}" method="get" role="search">
+        <label class="visually-hidden" for="ii-search-{{ section.id }}">Search products</label>
+        <input id="ii-search-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.search_placeholder }}" autocomplete="off">
+        <input type="hidden" name="type" value="product">
+        <button type="submit" aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+        </button>
+      </form>
+
+      <a class="ii-meeting" href="{{ meeting_url }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 10 6-3v10l-6-3M6 9h5M6 13h3"/></svg>
+        <span>{{ section.settings.meeting_label }}</span>
+      </a>
+
+      <a class="ii-mobile-account" href="{{ routes.account_url }}" aria-label="Account">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0"/></svg>
+      </a>
+    </div>
+
+    <div class="ii-mobile-nav" id="ii-mobile-nav-{{ section.id }}" hidden data-ii-mobile-nav>
+      <form class="ii-mobile-search" action="{{ routes.search_url }}" method="get" role="search">
+        <input type="search" name="q" placeholder="{{ section.settings.search_placeholder }}">
+        <input type="hidden" name="type" value="product">
+        <button type="submit" aria-label="Search">Search</button>
+      </form>
+      <details>
+        <summary>{{ section.settings.categories_label }}</summary>
+        {% for link in category_menu.links %}
+          <details>
+            <summary><a href="{{ link.url }}">{{ link.title }}</a></summary>
+            {% for childlink in link.links %}
+              <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+            {% endfor %}
+          </details>
+        {% endfor %}
+      </details>
+      {% for block in section.blocks %}
+        {% if block.type == 'brand_link' %}<a href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.label }}</a>{% endif %}
+      {% endfor %}
+      <a href="{{ meeting_url }}">{{ section.settings.meeting_label }}</a>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  :root {
+    --ii-blue: #398aca;
+    --ii-sky: #84bedf;
+    --ii-gold: #e4a63a;
+    --ii-ink: #1f2023;
+    --ii-muted: #676b70;
+    --ii-line: #d9dadd;
+    --ii-soft: #f5f5f4;
+    --ii-radius: 4px;
+    --ii-shell: 1490px;
+  }
+  .ii-header * { box-sizing: border-box; }
+  .ii-header { position: relative; z-index: 40; color: var(--ii-ink); background: #fff; font-family: Arial, Helvetica, sans-serif; }
+  .ii-shell { width: min(var(--ii-shell), calc(100% - 64px)); margin-inline: auto; }
+  .ii-announcement { min-height: 29px; background: #2f3032; color: #fff; font-size: 16px; font-weight: 700; }
+  .ii-announcement__inner { min-height: 29px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .ii-announcement__message { display: flex; align-items: center; gap: 8px; }
+  .ii-announcement a { color: #65a5d3; text-decoration: underline; text-underline-offset: 2px; }
+  .ii-announcement__tools { display: flex; align-items: center; gap: 14px; }
+  .ii-announcement__divider { width: 1px; height: 16px; background: #5b9bd0; }
+  .ii-account { color: #fff !important; line-height: 0; }
+  .ii-account svg, .ii-mobile-account svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .ii-utility-menu { position: relative; }
+  .ii-utility-menu summary { list-style: none; cursor: pointer; }
+  .ii-utility-menu summary::-webkit-details-marker { display: none; }
+  .ii-utility-menu__panel { position: absolute; right: 0; top: calc(100% + 7px); width: 220px; padding: 10px 0; background: #fff; border: 1px solid var(--ii-line); box-shadow: 0 14px 30px rgb(0 0 0 / .18); }
+  .ii-utility-menu__panel a { display: block; padding: 9px 16px; color: var(--ii-ink); font-size: 14px; text-decoration: none; }
+  .ii-utility-menu__panel a:hover { background: var(--ii-soft); color: var(--ii-blue); }
+  .ii-mainbar { border-bottom: 1px solid #cfd1d3; }
+  .ii-mainbar__inner { min-height: 76px; display: grid; grid-template-columns: auto auto minmax(420px, 1fr) minmax(280px, 365px) auto; align-items: center; gap: clamp(20px, 2.3vw, 42px); }
+  .ii-logo { display: inline-flex; align-items: center; min-width: 190px; color: var(--ii-ink); text-decoration: none; letter-spacing: -.06em; font-size: 32px; font-weight: 800; line-height: 1; }
+  .ii-logo img { display: block; width: auto; max-height: 52px; object-fit: contain; }
+  .ii-logo__id { color: var(--ii-blue); }
+  .ii-categories { height: 76px; display: flex; align-items: center; }
+  .ii-categories__trigger { height: 100%; display: flex; align-items: center; gap: 7px; padding: 0; border: 0; background: transparent; color: var(--ii-ink); font-size: 14px; font-weight: 800; cursor: pointer; white-space: nowrap; }
+  .ii-categories__trigger svg { width: 11px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s ease; }
+  .ii-categories__trigger[aria-expanded=true] svg { transform: rotate(180deg); }
+  .ii-brandnav { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: clamp(18px, 2vw, 44px); }
+  .ii-brandnav a { min-width: 0; color: var(--ii-ink); text-decoration: none; text-align: center; }
+  .ii-brandnav img { display: block; max-width: 105px; max-height: 38px; width: auto; height: auto; object-fit: contain; }
+  .ii-brandnav__wordmark { white-space: nowrap; font-size: clamp(14px, 1vw, 19px); font-weight: 800; }
+  .ii-brandnav a:first-child .ii-brandnav__wordmark { color: #407eaf; font-style: italic; }
+  .ii-search { height: 35px; display: flex; align-items: center; border: 1px solid #222; border-radius: 22px; overflow: hidden; }
+  .ii-search input { min-width: 0; flex: 1; height: 100%; padding: 0 12px; border: 0; outline: none; font-size: 13px; background: transparent; }
+  .ii-search button { width: 38px; height: 100%; display: grid; place-items: center; padding: 0; border: 0; background: transparent; cursor: pointer; }
+  .ii-search svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .ii-meeting { min-height: 38px; display: flex; align-items: center; gap: 7px; padding: 6px 10px; border: 2px solid #1c91ee; border-radius: 4px; color: #0876cc; text-decoration: none; font-size: 12px; font-weight: 700; line-height: 1.05; text-align: center; }
+  .ii-meeting svg { width: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .ii-mega { position: absolute; top: 100%; left: 50%; width: min(1100px, calc(100vw - 96px)); min-height: 486px; transform: translateX(-50%); display: grid; grid-template-columns: 160px 1fr 260px; background: #fff; border-top: 1px solid #202124; box-shadow: 0 12px 24px rgb(0 0 0 / .2); }
+  .ii-mega[hidden] { display: none; }
+  .ii-mega__tabs { padding: 8px 0; border-right: 1px solid #242628; }
+  .ii-mega__tab { display: block; padding: 10px 10px; color: #303236; font-size: 13px; font-weight: 700; line-height: 1.15; text-decoration: none; }
+  .ii-mega__tab.is-active { background: #4a9bd0; color: #fff; }
+  .ii-mega__content { min-width: 0; padding: 16px 10px; }
+  .ii-mega__panel { columns: 3 180px; column-gap: 28px; }
+  .ii-mega__panel[hidden] { display: none; }
+  .ii-mega__group { break-inside: avoid; margin: 0 0 17px; display: grid; gap: 4px; }
+  .ii-mega__group a { color: #65676b; font-size: 13px; line-height: 1.2; text-decoration: none; }
+  .ii-mega__group a:hover { color: var(--ii-blue); }
+  .ii-mega__heading { color: var(--ii-gold) !important; font-weight: 800; }
+  .ii-mega__view { color: #56585b !important; }
+  .ii-mega__empty { display: grid; gap: 12px; padding: 20px; }
+  .ii-mega__empty strong { font-size: 24px; }
+  .ii-mega__empty a { color: var(--ii-blue); }
+  .ii-mega__promo { border-left: 1px solid #242628; padding: 18px; }
+  .ii-mega__promo a { display: grid; gap: 12px; color: var(--ii-ink); text-decoration: none; font-weight: 800; }
+  .ii-mega__promo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .ii-mega__promo-placeholder { min-height: 220px; display: grid; place-items: center; padding: 20px; background: linear-gradient(135deg, #eaf4fb, #d4e9f6); color: #357fae; font-size: 26px; text-align: center; }
+  .ii-mobile-toggle, .ii-mobile-account, .ii-mobile-nav { display: none; }
+  @media (max-width: 1250px) {
+    .ii-mainbar__inner { grid-template-columns: auto auto 1fr auto; gap: 18px; }
+    .ii-brandnav { display: none; }
+  }
+  @media (max-width: 800px) {
+    .ii-shell { width: min(100% - 28px, var(--ii-shell)); }
+    .ii-announcement { font-size: 12px; }
+    .ii-announcement__inner { min-height: 34px; }
+    .ii-announcement__tools { display: none; }
+    .ii-mainbar__inner { min-height: 64px; grid-template-columns: 36px 1fr 36px; gap: 10px; }
+    .ii-mobile-toggle { width: 36px; height: 36px; display: grid; align-content: center; gap: 5px; padding: 7px; border: 0; background: transparent; }
+    .ii-mobile-toggle > span:not(.visually-hidden) { height: 2px; background: currentColor; }
+    .ii-logo { min-width: 0; justify-content: center; font-size: 28px; }
+    .ii-logo img { max-height: 42px; }
+    .ii-categories, .ii-search, .ii-meeting { display: none; }
+    .ii-mobile-account { display: grid; place-items: center; color: var(--ii-ink); }
+    .ii-mobile-nav { padding: 12px 18px 24px; border-top: 1px solid var(--ii-line); background: #fff; }
+    .ii-mobile-nav.is-open { display: grid; }
+    .ii-mobile-search { display: flex; border: 1px solid var(--ii-line); margin-bottom: 8px; }
+    .ii-mobile-search input { flex: 1; min-width: 0; padding: 11px; border: 0; }
+    .ii-mobile-search button { padding: 0 14px; border: 0; background: var(--ii-blue); color: #fff; }
+    .ii-mobile-nav summary, .ii-mobile-nav > a, .ii-mobile-nav details > a { display: block; padding: 12px 4px; color: var(--ii-ink); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--ii-line); }
+    .ii-mobile-nav details details { padding-left: 14px; }
+    .ii-mobile-nav summary::marker { color: var(--ii-blue); }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const headers = document.querySelectorAll('[data-ii-header]');
+    headers.forEach((header) => {
+      const trigger = header.querySelector('[data-ii-mega-trigger]');
+      const mega = header.querySelector('[data-ii-mega]');
+      const tabs = header.querySelectorAll('[data-ii-tab]');
+      const panels = header.querySelectorAll('[data-ii-panel]');
+      const mobileToggle = header.querySelector('[data-ii-mobile-toggle]');
+      const mobileNav = header.querySelector('[data-ii-mobile-nav]');
+      const closeMega = () => {
+        if (!mega || !trigger) return;
+        mega.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      };
+      if (trigger && mega) {
+        trigger.addEventListener('click', () => {
+          mega.hidden = !mega.hidden;
+          trigger.setAttribute('aria-expanded', String(!mega.hidden));
+        });
+        document.addEventListener('click', (event) => {
+          if (!header.contains(event.target)) closeMega();
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeMega();
+        });
+      }
+      tabs.forEach((tab) => {
+        const activate = () => {
+          const index = tab.dataset.iiTab;
+          tabs.forEach((item) => {
+            item.classList.toggle('is-active', item === tab);
+            item.setAttribute('aria-selected', String(item === tab));
+          });
+          panels.forEach((panel) => {
+            const active = panel.dataset.iiPanel === index;
+            panel.classList.toggle('is-active', active);
+            panel.hidden = !active;
+          });
+        };
+        tab.addEventListener('mouseenter', activate);
+        tab.addEventListener('focus', activate);
+      });
+      if (mobileToggle && mobileNav) {
+        mobileToggle.addEventListener('click', () => {
+          const open = !mobileNav.classList.contains('is-open');
+          mobileNav.classList.toggle('is-open', open);
+          mobileNav.hidden = !open;
+          mobileToggle.setAttribute('aria-expanded', String(open));
+        });
+      }
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "ImprintID header",
+  "tag": "section",
+  "class": "section-header",
+  "limit": 1,
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "min": 140, "max": 280, "step": 10, "unit": "px", "label": "Logo width", "default": 190 },
+    { "type": "text", "id": "announcement_text", "label": "Announcement", "default": "Worried about the tariff? No problem –" },
+    { "type": "text", "id": "announcement_link_label", "label": "Announcement link label", "default": "Learn More" },
+    { "type": "url", "id": "announcement_link", "label": "Announcement link" },
+    { "type": "text", "id": "utility_label", "label": "Utility menu label", "default": "Distributor Tools" },
+    { "type": "text", "id": "categories_label", "label": "Categories label", "default": "CATEGORIES" },
+    { "type": "link_list", "id": "category_menu", "label": "Category menu", "default": "main-menu" },
+    { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search Products" },
+    { "type": "text", "id": "meeting_label", "label": "Meeting button label", "default": "Book a Meeting" },
+    { "type": "url", "id": "meeting_url", "label": "Meeting button link" },
+    { "type": "image_picker", "id": "mega_promo_image", "label": "Mega menu promotion image" },
+    { "type": "text", "id": "mega_promo_title", "label": "Mega menu promotion title", "default": "Explore Custom Promotional Products" },
+    { "type": "url", "id": "mega_promo_link", "label": "Mega menu promotion link" }
+  ],
+  "blocks": [
+    {
+      "type": "brand_link",
+      "name": "Brand link",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Brand" },
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ImprintID header",
+      "blocks": [
+        { "type": "brand_link" },
+        { "type": "brand_link" },
+        { "type": "brand_link" },
+        { "type": "brand_link" },
+        { "type": "brand_link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

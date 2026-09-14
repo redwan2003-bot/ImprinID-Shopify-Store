@@ -1,0 +1,330 @@
+{% liquid
+  assign all_collection = collections['all']
+  assign hero_product = section.settings.hero_product
+  if hero_product == blank
+    assign hero_product = all_collection.products.first
+  endif
+%}
+
+<section class="ii-home">
+  <div class="ii-home__shell">
+    <div class="ii-hero">
+      <a class="ii-hero__primary" href="{{ hero_product.url | default: routes.all_products_collection_url }}">
+        {% if section.settings.hero_image != blank %}
+          {{ section.settings.hero_image | image_url: width: 1800 | image_tag: widths: '640, 960, 1280, 1800', sizes: '(min-width: 900px) 62vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_heading }}
+        {% elsif hero_product.featured_image != blank %}
+          {{ hero_product.featured_image | image_url: width: 1800 | image_tag: widths: '640, 960, 1280, 1800', sizes: '(min-width: 900px) 62vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: hero_product.title }}
+        {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'ii-placeholder' }}
+        {% endif %}
+        <span class="ii-hero__shade"></span>
+        <span class="ii-hero__copy">
+          <span class="ii-hero__eyebrow">{{ section.settings.hero_eyebrow }}</span>
+          <strong>{{ section.settings.hero_heading }}</strong>
+          <span>{{ section.settings.hero_text }}</span>
+          <span class="ii-button ii-button--light">{{ section.settings.hero_button }}</span>
+        </span>
+      </a>
+
+      <div class="ii-hero__tiles">
+        {% for block in section.blocks %}
+          {% if block.type == 'hero_tile' %}
+            {% liquid
+              assign tile_product = block.settings.product
+              assign tile_image = block.settings.image
+              if tile_image == blank
+                assign tile_image = tile_product.featured_image
+              endif
+            %}
+            <a class="ii-hero-tile ii-hero-tile--{{ forloop.index }}" href="{{ block.settings.link | default: tile_product.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+              {% if tile_image != blank %}
+                {{ tile_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 900px) 38vw, 100vw', loading: 'eager', alt: block.settings.heading }}
+              {% else %}
+                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+              {% endif %}
+              <span class="ii-hero-tile__shade"></span>
+              <span class="ii-hero-tile__copy">
+                <strong>{{ block.settings.heading }}</strong>
+                <span>{{ block.settings.text }}</span>
+                <span class="ii-button ii-button--light">{{ block.settings.button_label }}</span>
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="ii-section-heading">
+      <h2>{{ section.settings.brand_heading }}</h2>
+      {% if section.settings.brand_link_label != blank %}<a href="{{ section.settings.brand_link | default: routes.all_products_collection_url }}">{{ section.settings.brand_link_label }}</a>{% endif %}
+    </div>
+    <div class="ii-brand-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'brand_card' %}
+          {% liquid
+            assign brand_product = block.settings.product
+            assign brand_image = block.settings.image
+            if brand_image == blank
+              assign brand_image = brand_product.featured_image
+            endif
+          %}
+          <a class="ii-brand-card" href="{{ block.settings.link | default: brand_product.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+            <span class="ii-brand-card__media">
+              {% if brand_image != blank %}
+                {{ brand_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', loading: 'lazy', alt: block.settings.title }}
+              {% else %}
+                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+              {% endif %}
+            </span>
+            <span class="ii-brand-card__body">
+              <strong>{{ block.settings.title }}</strong>
+              <span>{{ block.settings.text }}</span>
+            </span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="ii-section-heading ii-section-heading--center"><h2>{{ section.settings.merch_heading }}</h2></div>
+    <div class="ii-merch-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'merch_card' %}
+          {% liquid
+            assign merch_collection = block.settings.collection
+            assign merch_image = block.settings.image
+            if merch_image == blank
+              assign merch_image = merch_collection.image
+            endif
+            if merch_image == blank
+              assign merch_image = merch_collection.products.first.featured_image
+            endif
+          %}
+          <a class="ii-merch-card" href="{{ block.settings.link | default: merch_collection.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+            {% if merch_image != blank %}
+              {{ merch_image | image_url: width: 1200 | image_tag: widths: '480, 720, 960, 1200', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy', alt: block.settings.title }}
+            {% else %}
+              {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+            {% endif %}
+            <span class="ii-merch-card__shade"></span>
+            <span class="ii-merch-card__copy">
+              <strong>{{ block.settings.title }}</strong>
+              <span>{{ block.settings.text }}</span>
+              <span class="ii-button ii-button--light">{{ block.settings.button_label }}</span>
+            </span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if section.settings.merch_button_label != blank %}
+      <div class="ii-home__center"><a class="ii-button ii-button--blue" href="{{ section.settings.merch_button_link | default: routes.all_products_collection_url }}">{{ section.settings.merch_button_label }}</a></div>
+    {% endif %}
+
+    {% assign top_collection = section.settings.top_collection %}
+    {% if top_collection != blank %}
+      <div class="ii-section-heading">
+        <h2>{{ section.settings.top_heading }}</h2>
+        <a href="{{ top_collection.url }}">{{ section.settings.top_link_label }}</a>
+      </div>
+      <div class="ii-product-rail">
+        {% for product in top_collection.products limit: section.settings.products_to_show %}
+          <article class="ii-product-card">
+            <a class="ii-product-card__media" href="{{ product.url }}">
+              {% if product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 720 | image_tag: widths: '280, 420, 560, 720', sizes: '(min-width: 900px) 20vw, 48vw', loading: 'lazy', alt: product.title }}
+              {% else %}
+                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+              {% endif %}
+            </a>
+            <div class="ii-product-card__body">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+              <span>{{ product.price | money }}</span>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="ii-tool-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'tool_card' %}
+          <a class="ii-tool-card ii-tool-card--{{ block.settings.tone }}" href="{{ block.settings.link | default: routes.root_url }}" {{ block.shopify_attributes }}>
+            <span class="ii-tool-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+            <span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span>
+            <span class="ii-tool-card__arrow" aria-hidden="true">→</span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .ii-home { background: #fff; color: var(--ii-ink, #1f2023); font-family: Arial, Helvetica, sans-serif; }
+  .ii-home * { box-sizing: border-box; }
+  .ii-home__shell { width: min(var(--ii-shell, 1490px), calc(100% - 96px)); margin-inline: auto; padding: 14px 0 76px; }
+  .ii-hero { min-height: 535px; display: grid; grid-template-columns: minmax(0, 1.72fr) minmax(320px, .95fr); gap: 14px; }
+  .ii-hero__primary, .ii-hero-tile, .ii-merch-card { position: relative; display: block; overflow: hidden; color: #fff; text-decoration: none; background: #e8e8e8; }
+  .ii-hero__primary > img, .ii-hero-tile > img, .ii-merch-card > img, .ii-placeholder { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .55s ease; }
+  .ii-hero__primary:hover > img, .ii-hero-tile:hover > img, .ii-merch-card:hover > img { transform: scale(1.025); }
+  .ii-hero__shade, .ii-hero-tile__shade, .ii-merch-card__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / .56), rgb(0 0 0 / .08) 65%); }
+  .ii-hero__copy { position: absolute; left: clamp(28px, 4vw, 70px); bottom: clamp(34px, 5vw, 72px); width: min(520px, calc(100% - 60px)); display: grid; justify-items: start; gap: 12px; }
+  .ii-hero__copy strong { max-width: 470px; font-size: clamp(36px, 4.3vw, 68px); line-height: .98; letter-spacing: -.035em; }
+  .ii-hero__copy > span:not(.ii-button):not(.ii-hero__eyebrow) { font-size: 17px; line-height: 1.5; }
+  .ii-hero__eyebrow { color: #fff; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .ii-hero__tiles { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; }
+  .ii-hero-tile:first-child { grid-column: 1 / -1; }
+  .ii-hero-tile__shade { background: linear-gradient(0deg, rgb(0 0 0 / .55), transparent 70%); }
+  .ii-hero-tile__copy { position: absolute; inset: auto 22px 20px; display: grid; justify-items: start; gap: 7px; }
+  .ii-hero-tile__copy strong { font-size: clamp(19px, 1.5vw, 26px); line-height: 1.05; }
+  .ii-hero-tile__copy > span:not(.ii-button) { font-size: 13px; }
+  .ii-button { min-height: 37px; display: inline-flex; align-items: center; justify-content: center; padding: 9px 20px; border: 1px solid currentColor; border-radius: 3px; font-size: 13px; font-weight: 800; text-decoration: none; transition: .2s ease; }
+  .ii-button--light { margin-top: 4px; background: #fff; color: #222; border-color: #fff; }
+  .ii-button--light:hover { background: var(--ii-blue, #398aca); color: #fff; border-color: var(--ii-blue, #398aca); }
+  .ii-button--blue { background: var(--ii-blue, #398aca); color: #fff; border-color: var(--ii-blue, #398aca); }
+  .ii-button--blue:hover { background: #246d9f; }
+  .ii-section-heading { margin: 64px 0 26px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+  .ii-section-heading--center { justify-content: center; }
+  .ii-section-heading h2 { margin: 0; font-size: clamp(25px, 2.4vw, 38px); line-height: 1; letter-spacing: -.02em; text-transform: uppercase; }
+  .ii-section-heading a { color: var(--ii-blue, #398aca); font-size: 14px; font-weight: 800; text-underline-offset: 4px; }
+  .ii-brand-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; }
+  .ii-brand-card { display: grid; color: var(--ii-ink, #1f2023); text-decoration: none; background: #fff; border: 1px solid #dedfe1; }
+  .ii-brand-card__media { aspect-ratio: 1.25; overflow: hidden; background: #f0f1f1; }
+  .ii-brand-card__media img, .ii-brand-card__media svg { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .4s ease; }
+  .ii-brand-card:hover img { transform: scale(1.035); }
+  .ii-brand-card__body { min-height: 78px; display: grid; align-content: center; gap: 5px; padding: 14px 16px; }
+  .ii-brand-card__body strong { font-size: 20px; text-transform: uppercase; }
+  .ii-brand-card__body span { color: #666; font-size: 13px; }
+  .ii-merch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ii-merch-card { min-height: 390px; }
+  .ii-merch-card__shade { background: linear-gradient(90deg, rgb(0 0 0 / .62), rgb(0 0 0 / .06) 75%); }
+  .ii-merch-card__copy { position: absolute; left: 34px; bottom: 32px; max-width: 60%; display: grid; justify-items: start; gap: 8px; }
+  .ii-merch-card__copy strong { font-size: clamp(26px, 2.4vw, 42px); line-height: 1; }
+  .ii-merch-card__copy > span:not(.ii-button) { font-size: 14px; line-height: 1.4; }
+  .ii-home__center { margin-top: 28px; text-align: center; }
+  .ii-product-rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 16px; overflow-x: auto; padding-bottom: 14px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+  .ii-product-card { min-width: 0; scroll-snap-align: start; border: 1px solid #e0e1e3; background: #fff; }
+  .ii-product-card__media { aspect-ratio: 1; display: block; overflow: hidden; background: #f5f5f4; }
+  .ii-product-card__media img, .ii-product-card__media svg { width: 100%; height: 100%; display: block; object-fit: contain; transition: transform .35s ease; }
+  .ii-product-card:hover img { transform: scale(1.04); }
+  .ii-product-card__body { min-height: 86px; display: grid; align-content: space-between; gap: 8px; padding: 13px; }
+  .ii-product-card__body a { color: var(--ii-ink, #1f2023); font-size: 14px; line-height: 1.35; text-decoration: none; }
+  .ii-product-card__body span { color: var(--ii-blue, #398aca); font-size: 14px; font-weight: 800; }
+  .ii-tool-grid { margin-top: 68px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .ii-tool-card { min-height: 114px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 15px; padding: 22px; color: #fff; text-decoration: none; background: #292b2e; }
+  .ii-tool-card--blue { background: #398aca; }
+  .ii-tool-card--gold { background: #d89b2d; }
+  .ii-tool-card--light { color: #202124; background: #eceeef; }
+  .ii-tool-card__icon { font-size: 30px; }
+  .ii-tool-card strong, .ii-tool-card small { display: block; }
+  .ii-tool-card strong { margin-bottom: 5px; font-size: 18px; }
+  .ii-tool-card small { font-size: 12px; line-height: 1.35; }
+  .ii-tool-card__arrow { font-size: 24px; }
+  @media (max-width: 1000px) {
+    .ii-home__shell { width: min(100% - 40px, var(--ii-shell, 1490px)); }
+    .ii-hero { min-height: auto; grid-template-columns: 1fr; }
+    .ii-hero__primary { min-height: 540px; }
+    .ii-hero__tiles { min-height: 480px; }
+    .ii-brand-grid { grid-template-columns: 1fr 1fr; }
+    .ii-tool-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 650px) {
+    .ii-home__shell { width: min(100% - 28px, var(--ii-shell, 1490px)); padding-top: 10px; }
+    .ii-hero__primary { min-height: 500px; }
+    .ii-hero__copy { left: 24px; bottom: 28px; width: calc(100% - 48px); }
+    .ii-hero__tiles { min-height: 760px; grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+    .ii-hero-tile:first-child { grid-column: auto; }
+    .ii-section-heading { margin-top: 46px; }
+    .ii-brand-grid, .ii-merch-grid, .ii-tool-grid { grid-template-columns: 1fr; }
+    .ii-merch-card { min-height: 360px; }
+    .ii-merch-card__copy { left: 24px; bottom: 24px; max-width: 82%; }
+    .ii-product-rail { grid-auto-columns: 74%; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "ImprintID homepage",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "product", "id": "hero_product", "label": "Hero product" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Hero eyebrow", "default": "CUSTOM PROMOTIONAL PRODUCTS" },
+    { "type": "text", "id": "hero_heading", "label": "Hero heading", "default": "Build your brand with products people keep" },
+    { "type": "textarea", "id": "hero_text", "label": "Hero text", "default": "Distinctive products, dependable decoration and distributor-first support." },
+    { "type": "text", "id": "hero_button", "label": "Hero button", "default": "Shop Products" },
+    { "type": "header", "content": "Brand spotlight" },
+    { "type": "text", "id": "brand_heading", "label": "Heading", "default": "Brand Spotlight" },
+    { "type": "text", "id": "brand_link_label", "label": "Link label", "default": "View all brands" },
+    { "type": "url", "id": "brand_link", "label": "Link" },
+    { "type": "header", "content": "Promotional merchandise" },
+    { "type": "text", "id": "merch_heading", "label": "Heading", "default": "Promotional Merch" },
+    { "type": "text", "id": "merch_button_label", "label": "Button label", "default": "View All Categories" },
+    { "type": "url", "id": "merch_button_link", "label": "Button link" },
+    { "type": "header", "content": "Top sellers" },
+    { "type": "text", "id": "top_heading", "label": "Heading", "default": "Top Sellers" },
+    { "type": "text", "id": "top_link_label", "label": "Link label", "default": "Shop all" },
+    { "type": "collection", "id": "top_collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 4, "max": 12, "step": 1, "default": 8 }
+  ],
+  "blocks": [
+    {
+      "type": "hero_tile",
+      "name": "Hero tile",
+      "limit": 3,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Featured collection" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Shop new promotional products" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "brand_card",
+      "name": "Brand spotlight card",
+      "limit": 4,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Representative product" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Brand", "default": "Brand" },
+        { "type": "text", "id": "text", "label": "Description", "default": "Explore the collection" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "merch_card",
+      "name": "Merchandise category",
+      "limit": 6,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Product category" },
+        { "type": "text", "id": "text", "label": "Description", "default": "Shop custom promotional products" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "tool_card",
+      "name": "Service link",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon or emoji", "default": "★" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Distributor tool" },
+        { "type": "text", "id": "text", "label": "Description", "default": "Everything you need to sell" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "select", "id": "tone", "label": "Color", "default": "dark", "options": [
+          { "value": "dark", "label": "Dark" },
+          { "value": "blue", "label": "Blue" },
+          { "value": "gold", "label": "Gold" },
+          { "value": "light", "label": "Light" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [{ "name": "ImprintID homepage" }]
+}
+{% endschema %}
