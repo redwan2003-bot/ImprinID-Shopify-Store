@@ -1,0 +1,72 @@
+.ii-selling-plans {
+  display: block;
+  margin-top: 1.5rem;
+}
+
+.ii-selling-plans__fieldset {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 1.2rem;
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+}
+
+.ii-selling-plans__legend {
+  padding: 0 0.5rem;
+  font-weight: 700;
+}
+
+.ii-selling-plan {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6rem 0.8rem;
+  align-items: start;
+}
+
+.ii-selling-plan__radio {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin: 0.15rem 0 0;
+}
+
+.ii-selling-plan > label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  align-items: baseline;
+  cursor: pointer;
+}
+
+.ii-selling-plan > label small {
+  color: rgb(var(--color-foreground));
+  font-size: 1.2rem;
+}
+
+.ii-selling-plan__options {
+  grid-column: 2;
+  display: none;
+  gap: 0.4rem;
+}
+
+.ii-selling-plan__radio:checked ~ .ii-selling-plan__options {
+  display: grid;
+}
+
+.ii-selling-plan__options label {
+  font-size: 1.2rem;
+}
+
+.ii-selling-plan__options select {
+  min-height: 4rem;
+  padding: 0.7rem 3rem 0.7rem 1rem;
+  border: 1px solid rgba(var(--color-foreground), 0.45);
+  border-radius: 0;
+  color: rgb(var(--color-foreground));
+  background: rgb(var(--color-background));
+}
+
+.ii-selling-plan__radio:focus-visible,
+.ii-selling-plan__options select:focus-visible {
+  outline: 0.2rem solid rgba(var(--color-foreground), 0.65);
+  outline-offset: 0.2rem;
+}
