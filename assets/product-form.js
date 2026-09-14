@@ -5,11 +5,15 @@ if (!customElements.get('product-form')) {
       super();
 
       this.form = this.querySelector('form');
-      this.form.querySelector('[name=id]').disabled = false;
+      if (!this.form) return;
+
+      const variantInput = this.form.querySelector('[name=id]');
+      if (variantInput) variantInput.disabled = false;
       this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
       this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
       this.submitButton = this.querySelector('[type="submit"]');
-      if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
+      if (!this.submitButton) return;
+      if (this.cart?.matches('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
       this.hideErrors = this.dataset.hideErrors === 'true';
     }
@@ -22,22 +26,28 @@ if (!customElements.get('product-form')) {
 
       this.submitButton.setAttribute('aria-disabled', true);
       this.submitButton.classList.add('loading');
-      this.querySelector('.loading-overlay__spinner').classList.remove('hidden');
+      const loadingSpinner = this.querySelector('.loading-overlay__spinner');
+      loadingSpinner?.classList.remove('hidden');
 
       const config = fetchConfig('javascript');
       config.headers['X-Requested-With'] = 'XMLHttpRequest';
       delete config.headers['Content-Type'];
 
       const formData = new FormData(this.form);
-      if (this.cart) {
+      const canRenderCart =
+        this.cart &&
+        typeof this.cart.getSectionsToRender === 'function' &&
+        typeof this.cart.renderContents === 'function';
+
+      if (canRenderCart) {
         formData.append('sections', this.cart.getSectionsToRender().map((section) => section.id));
         formData.append('sections_url', window.location.pathname);
-        this.cart.setActiveElement(document.activeElement);
+        if (typeof this.cart.setActiveElement === 'function') this.cart.setActiveElement(document.activeElement);
       }
-    
-      //Added to generate selling plan add to cart response
-      const sellingPlanId = window.getCurrentSellingPlanId();
-      formData.append("selling_plan", sellingPlanId);
+
+      const sellingPlanId = window.getCurrentSellingPlanId?.();
+      formData.delete('selling_plan');
+      if (/^\d+$/.test(String(sellingPlanId || ''))) formData.append('selling_plan', sellingPlanId);
       
       config.body = formData;
 
@@ -55,7 +65,7 @@ if (!customElements.get('product-form')) {
             soldOutMessage.classList.remove('hidden');
             this.error = true;
             return;
-          } else if (!this.cart) {
+          } else if (!canRenderCart) {
             window.location = window.routes.cart_url;
             return;
           }
@@ -79,7 +89,7 @@ if (!customElements.get('product-form')) {
           this.submitButton.classList.remove('loading');
           if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
           if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-          this.querySelector('.loading-overlay__spinner').classList.add('hidden');
+          loadingSpinner?.classList.add('hidden');
         });
     }
 
