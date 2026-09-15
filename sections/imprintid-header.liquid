@@ -425,7 +425,26 @@
   </div>
 </header>
 
-{% schema %}
+<style>
+  /* Measured desktop header layout */
+  @media screen and (min-width:1001px){
+  .ii-header{width:100%;min-height:132px}
+  .ii-header .ii-shell{width:min(100% - 60px,1499px);max-width:1499px;margin:0 auto}
+  .ii-announcement{height:36px;min-height:36px}
+  .ii-announcement__inner{height:36px;min-height:36px}
+  .ii-mainbar{height:96px;min-height:96px}
+  .ii-mainbar__inner{height:96px;min-height:96px;max-width:1499px}
+  .ii-logo{width:230px;height:63px;display:flex;align-items:center;flex:0 0 230px}
+  .ii-logo img{width:230px;height:45px;object-fit:contain}
+  .ii-categories__trigger,.ii-brandnav__trigger,.ii-brandnav__link{height:95px}
+  .ii-search{height:40px;min-height:40px}
+  .ii-search__form{height:40px;min-height:40px}
+  .ii-search input{height:40px;min-height:40px}
+  .ii-meeting{width:86px;height:40px;min-height:40px;display:inline-flex;align-items:center;justify-content:center}
+  .ii-meeting svg{width:18px;height:18px}
+  }
+  </style>
+  {% schema %}
 {
   "name": "ImprintID header",
   "tag": "section",
