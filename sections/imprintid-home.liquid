@@ -225,6 +225,7 @@
     .ii-hero__primary { min-height: 540px; }
     .ii-hero__tiles { min-height: 480px; }
     .ii-brand-grid { grid-template-columns: 1fr 1fr; }
+    </style><style>
     .ii-tool-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 650px) {
@@ -268,9 +269,11 @@
                                                           .ii-brand-card__media { height: auto; aspect-ratio: 1.25; }
                                                               .ii-merch-card { width: 100%; height: 95px; }
                                                                 }
-                                                                </style>
+                                                                
+                                                                  .ii-tool-grid { width: 1200px !important; max-width: 1200px !important; grid-template-columns: repeat(4, 1fr) !important; height: 138px !important; }
+                                                                    .ii-tool-card { height: 138px !important; min-height: 138px !important; }
                                                                 <style>
-                                                                  /* Measured desktop homepage layout */
+                                                                  
                                                                     .ii-home__shell { width: min(100% - 40px, 1499px) !important; max-width: 1499px !important; margin: 0 auto !important; }
                                                                       .ii-hero { display: grid !important; grid-template-columns: 719px 699px !important; gap: 81px !important; height: 438px !important; min-height: 438px !important; }
                                                                         .ii-hero__primary { width: 719px !important; height: 405px !important; min-height: 405px !important; }
@@ -307,7 +310,7 @@
                                                                                                                                                       .ii-merch-card { height: 95px !important; }
                                                                                                                                                         }
                                                                                                                                                         </style>
-                                                                                                                                                        
+
                                                                 
                                                                 {% schema %}
 {
