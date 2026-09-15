@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "imprintid_home": {
@@ -7,6 +16,7 @@
           "type": "hero_tile",
           "settings": {
             "product": "6-can-rtic-soft-pack-insulated-cooler-bag-w-bottle-opener-8-5-x-7-5",
+            "image": "shopify://shop_images/x-brands-gif.gif",
             "heading": "Outdoor favorites",
             "text": "Premium coolers and bags",
             "button_label": "Shop RTIC",
@@ -17,6 +27,7 @@
           "type": "hero_tile",
           "settings": {
             "product": "4-qt-igloo-usa-made-playmate-mini-hard-cooler",
+            "image": "shopify://shop_images/RejuVe-homepageBanner.jpg",
             "heading": "Made for every event",
             "text": "Recognizable brands, custom decorated",
             "button_label": "Explore",
@@ -27,6 +38,7 @@
           "type": "hero_tile",
           "settings": {
             "product": "25-oz-titus-ss-water-bottle-3-pack-golf-balls-a5-notebook-with-pen-gift-set",
+            "image": "shopify://shop_images/small-usa-made.png",
             "heading": "Gift-ready sets",
             "text": "Memorable merchandise made easy",
             "button_label": "Shop gifts",
@@ -75,7 +87,8 @@
             "collection": "all-lanyards-id-products",
             "title": "Lanyards & ID Products",
             "text": "Custom credentials and event essentials",
-            "button_label": "Shop Lanyards"
+            "button_label": "Shop Lanyards",
+            "link": ""
           }
         },
         "merch_bags": {
@@ -84,7 +97,8 @@
             "collection": "bags-backpacks",
             "title": "Totes & Bags",
             "text": "Everyday carry with lasting brand exposure",
-            "button_label": "Shop Bags"
+            "button_label": "Shop Bags",
+            "link": ""
           }
         },
         "merch_drinkware": {
@@ -93,7 +107,8 @@
             "collection": "drinkware",
             "title": "Drinkware",
             "text": "Tumblers, bottles and mugs for every audience",
-            "button_label": "Shop Drinkware"
+            "button_label": "Shop Drinkware",
+            "link": ""
           }
         },
         "merch_apparel": {
@@ -102,7 +117,8 @@
             "collection": "apparel-sets",
             "title": "Custom Apparel",
             "text": "Branded layers, uniforms and event wear",
-            "button_label": "Shop Apparel"
+            "button_label": "Shop Apparel",
+            "link": ""
           }
         },
         "merch_office": {
@@ -111,7 +127,8 @@
             "collection": "all-pens",
             "title": "Office Supplies",
             "text": "Useful desk products that keep brands visible",
-            "button_label": "Shop Office"
+            "button_label": "Shop Office",
+            "link": ""
           }
         },
         "merch_headwear": {
@@ -120,7 +137,8 @@
             "collection": "headwear",
             "title": "Headwear",
             "text": "Caps and hats ready for custom decoration",
-            "button_label": "Shop Headwear"
+            "button_label": "Shop Headwear",
+            "link": ""
           }
         },
         "tool_special": {
@@ -165,13 +183,27 @@
         }
       },
       "block_order": [
-        "hero_rtic", "hero_igloo", "hero_titus",
-        "brand_rtic", "brand_ridge", "brand_igloo", "brand_titus",
-        "merch_lanyards", "merch_bags", "merch_drinkware", "merch_apparel", "merch_office", "merch_headwear",
-        "tool_special", "tool_catalog", "tool_po", "tool_support"
+        "hero_rtic",
+        "hero_igloo",
+        "hero_titus",
+        "brand_rtic",
+        "brand_ridge",
+        "brand_igloo",
+        "brand_titus",
+        "merch_lanyards",
+        "merch_bags",
+        "merch_drinkware",
+        "merch_apparel",
+        "merch_office",
+        "merch_headwear",
+        "tool_special",
+        "tool_catalog",
+        "tool_po",
+        "tool_support"
       ],
       "settings": {
         "hero_product": "20l-rtic-road-trip-water-resistant-laptop-backpack-11-x-20-x-8",
+        "hero_image": "shopify://shop_images/2609-HPB-1670x940-LAN_3238bf6d-ddcb-4f65-aadb-3eee730fb9c8_040214.png",
         "hero_eyebrow": "CUSTOM PROMOTIONAL PRODUCTS",
         "hero_heading": "Build your brand with products people keep",
         "hero_text": "Distinctive products, dependable decoration and distributor-first support.",
@@ -189,5 +221,7 @@
       }
     }
   },
-  "order": ["imprintid_home"]
+  "order": [
+    "imprintid_home"
+  ]
 }
