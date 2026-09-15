@@ -576,5 +576,15 @@
                                                                                                                                                                                                                                                                                         .ii-header img { max-width: 100%; height: auto; }
                                                                                                                                                                                                                                                                                         @media (max-width: 900px) { .ii-header .ii-mainbar { gap: 10px; } }
                                                                                                                                                                                                                                                                                         @media (max-width: 749px) { .ii-header .ii-mainbar { padding-inline: 12px; gap: 8px; } }
-                                                                                                                                                                                                                                                                                        </style>
+                                                                                                                                                                                                                                                                                        
+@media screen and (min-width:1001px){
+  .ii-header .ii-mainbar__inner{display:flex!important;align-items:center!important;gap:0!important;overflow:hidden!important;width:min(100% - 60px,1499px)!important;max-width:1499px!important}
+  .ii-header .ii-logo{flex:0 0 230px!important;width:230px!important;margin-right:12px!important}
+  .ii-header .ii-categories{flex:0 0 148px!important;width:148px!important;min-width:0!important}
+  .ii-header .ii-brandnav{flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;display:flex!important}
+  .ii-header .ii-search{flex:0 0 213px!important;width:213px!important;min-width:213px!important;margin-left:12px!important}
+  .ii-header .ii-meeting{flex:0 0 86px!important;width:86px!important;min-width:86px!important;margin-left:12px!important;white-space:nowrap!important;overflow:hidden!important}
+  .ii-header .ii-meeting span{white-space:nowrap!important}
+}
+</style>
                                                                                                                                                                                                                                                                                         
