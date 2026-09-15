@@ -49,6 +49,7 @@
           "type": "brand_card",
           "settings": {
             "product": "28-can-rtic-soft-pack-insulated-cooler-bag-w-bottle-opener-13-x-12",
+            "image": "shopify://shop_images/RTICsoftCooler.png",
             "title": "RTIC",
             "text": "Rugged coolers and outdoor gear",
             "link": "shopify://collections/rtic"
@@ -58,6 +59,7 @@
           "type": "brand_card",
           "settings": {
             "product": "manhattan-ridge-slim-stylus-pens",
+            "image": "shopify://shop_images/Ridge.png",
             "title": "Ridge",
             "text": "Refined writing instruments",
             "link": "/search?q=ridge"
@@ -67,6 +69,7 @@
           "type": "brand_card",
           "settings": {
             "product": "40-oz-igloo-stainless-steel-vacuum-insulated-travel-mug",
+            "image": "shopify://shop_images/igloo-baseball.png",
             "title": "Igloo",
             "text": "Iconic drinkware and coolers",
             "link": "/search?q=igloo"
@@ -76,6 +79,7 @@
           "type": "brand_card",
           "settings": {
             "product": "25-oz-titus-ss-water-bottle-3-pack-golf-balls-luxury-ball-point-pen-gift-set",
+            "image": "shopify://shop_images/TiTUS-1.png",
             "title": "TiTUS",
             "text": "Premium gifts built to impress",
             "link": "/search?q=titus"
@@ -85,6 +89,7 @@
           "type": "merch_card",
           "settings": {
             "collection": "all-lanyards-id-products",
+            "image": "shopify://shop_images/Everyday-Items.png",
             "title": "Lanyards & ID Products",
             "text": "Custom credentials and event essentials",
             "button_label": "Shop Lanyards",
@@ -95,6 +100,7 @@
           "type": "merch_card",
           "settings": {
             "collection": "bags-backpacks",
+            "image": "shopify://shop_images/Tote-Bags.jpg",
             "title": "Totes & Bags",
             "text": "Everyday carry with lasting brand exposure",
             "button_label": "Shop Bags",
@@ -105,6 +111,7 @@
           "type": "merch_card",
           "settings": {
             "collection": "drinkware",
+            "image": "shopify://shop_images/Drinkware1.png",
             "title": "Drinkware",
             "text": "Tumblers, bottles and mugs for every audience",
             "button_label": "Shop Drinkware",
@@ -115,6 +122,7 @@
           "type": "merch_card",
           "settings": {
             "collection": "apparel-sets",
+            "image": "shopify://shop_images/apparel-sportswear.jpg",
             "title": "Custom Apparel",
             "text": "Branded layers, uniforms and event wear",
             "button_label": "Shop Apparel",
@@ -125,6 +133,7 @@
           "type": "merch_card",
           "settings": {
             "collection": "all-pens",
+            "image": "shopify://shop_images/office-supplies.jpg",
             "title": "Office Supplies",
             "text": "Useful desk products that keep brands visible",
             "button_label": "Shop Office",
@@ -135,6 +144,7 @@
           "type": "merch_card",
           "settings": {
             "collection": "headwear",
+            "image": "shopify://shop_images/headwear.jpg",
             "title": "Headwear",
             "text": "Caps and hats ready for custom decoration",
             "button_label": "Shop Headwear",
