@@ -40,7 +40,7 @@
               {% if tile_image != blank %}
                 {{ tile_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 900px) 38vw, 100vw', loading: 'eager', alt: block.settings.heading }}
               {% else %}
-                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+                {{ 'product-1' | placeholder_svg_tag: 'ii-placeholder' }}
               {% endif %}
               <span class="ii-hero-tile__shade"></span>
               <span class="ii-hero-tile__copy">
@@ -73,7 +73,7 @@
               {% if brand_image != blank %}
                 {{ brand_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', loading: 'lazy', alt: block.settings.title }}
               {% else %}
-                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+                {{ 'product-1' | placeholder_svg_tag: 'ii-placeholder' }}
               {% endif %}
             </span>
             <span class="ii-brand-card__body">
@@ -132,7 +132,7 @@
               {% if product.featured_image != blank %}
                 {{ product.featured_image | image_url: width: 720 | image_tag: widths: '280, 420, 560, 720', sizes: '(min-width: 900px) 20vw, 48vw', loading: 'lazy', alt: product.title }}
               {% else %}
-                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'ii-placeholder' }}
+                {{ 'product-1' | placeholder_svg_tag: 'ii-placeholder' }}
               {% endif %}
             </a>
             <div class="ii-product-card__body">
