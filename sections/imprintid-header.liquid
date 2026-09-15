@@ -537,7 +537,7 @@
                                                   <script>
                                                     (() => {
                                                         const initHomeFixes = () => {
-                                                              const categoryButton = document.querySelector('button.ii-categories__trigger');
+                                                              const categoryButton = document.querySelector('button[id^="ii-categories-trigger"]');
                                                                     const categoryPanel = categoryButton && document.getElementById(categoryButton.getAttribute('aria-controls'));
                                                                           if (categoryButton && categoryPanel && !categoryButton.dataset.fixedInteraction) {
                                                                                   categoryButton.dataset.fixedInteraction = 'true';
@@ -569,4 +569,3 @@
                                                                                                                                                                                                                                                                                       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initHomeFixes); else initHomeFixes();
                                                                                                                                                                                                                                                                                         })();
                                                                                                                                                                                                                                                                                         </script>
-                                                                                                                                                                                                                                                                                        
