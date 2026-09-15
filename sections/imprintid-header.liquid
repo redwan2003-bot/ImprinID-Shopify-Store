@@ -511,3 +511,62 @@
   ]
 }
 {% endschema %}
+
+
+<style>
+    html, body { overflow-x: clip; }
+      .ii-header, .ii-header * { box-sizing: border-box; }
+        .ii-header .ii-mainbar, .ii-header .ii-shell { width: 100%; max-width: 100%; min-width: 0; }
+          .ii-header [class*="nav"], .ii-header [class*="search"], .ii-header [class*="bar"] { min-width: 0; max-width: 100%; }
+            cart-drawer:not(.active):not([open]), cart-drawer[aria-hidden="true"] { position: fixed; inset: 0; visibility: hidden; pointer-events: none; z-index: -1; }
+              .ii-product-rail { display: flex; gap: 16px; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; padding-bottom: 8px; }
+                .ii-product-card { flex: 0 0 clamp(180px, 22vw, 230px); max-width: 230px; scroll-snap-align: start; }
+                  .ii-product-rail-controls { display: flex; justify-content: flex-end; gap: 8px; margin: 0 0 12px; }
+                    .ii-product-rail-controls button { appearance: none; border: 1px solid currentColor; background: transparent; color: inherit; min-width: 42px; min-height: 36px; padding: 6px 12px; cursor: pointer; }
+                      .ii-product-rail-controls button:disabled { opacity: .4; cursor: not-allowed; }
+                        @media (max-width: 1100px) {
+                            .ii-header .ii-mainbar, .ii-header .ii-shell { padding-inline: clamp(12px, 2vw, 24px); }
+                                .ii-header [class*="search"] { flex: 1 1 180px; }
+                                  }
+                                    @media (max-width: 749px) {
+                                        .ii-header [class*="brand"] { display: none; }
+                                            .ii-header [class*="search"] { order: 5; flex-basis: 100%; }
+                                                .ii-product-card { flex-basis: min(72vw, 230px); }
+                                                  }
+                                                  </style>
+                                                  <script>
+                                                    (() => {
+                                                        const initHomeFixes = () => {
+                                                              const categoryButton = document.querySelector('button.ii-categories__trigger');
+                                                                    const categoryPanel = categoryButton && document.getElementById(categoryButton.getAttribute('aria-controls'));
+                                                                          if (categoryButton && categoryPanel && !categoryButton.dataset.fixedInteraction) {
+                                                                                  categoryButton.dataset.fixedInteraction = 'true';
+                                                                                          const syncCategoryState = () => {
+                                                                                                    const isOpen = !categoryPanel.hidden;
+                                                                                                              categoryButton.setAttribute('aria-expanded', String(isOpen));
+                                                                                                                        categoryButton.classList.toggle('is-open', isOpen);
+                                                                                                                                };
+                                                                                                                                        categoryButton.addEventListener('click', () => requestAnimationFrame(() => { categoryPanel.hidden = !categoryPanel.hidden; syncCategoryState(); }), true);
+                                                                                                                                                syncCategoryState();
+                                                                                                                                                      }
+                                                                                                                                                            const rail = document.querySelector('.ii-product-rail');
+                                                                                                                                                                  if (rail && !rail.dataset.controlsReady) {
+                                                                                                                                                                          rail.dataset.controlsReady = 'true';
+                                                                                                                                                                                  const controls = document.createElement('div');
+                                                                                                                                                                                          controls.className = 'ii-product-rail-controls';
+                                                                                                                                                                                                  const previous = document.createElement('button');
+                                                                                                                                                                                                          const next = document.createElement('button');
+                                                                                                                                                                                                                  previous.type = next.type = 'button'; previous.textContent = '‹'; next.textContent = '›';
+                                                                                                                                                                                                                          previous.setAttribute('aria-label', 'Previous products'); next.setAttribute('aria-label', 'Next products');
+                                                                                                                                                                                                                                  controls.append(previous, next); rail.parentElement.insertBefore(controls, rail);
+                                                                                                                                                                                                                                          const updateControls = () => { previous.disabled = rail.scrollLeft <= 1; next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 1; };
+                                                                                                                                                                                                                                                  previous.addEventListener('click', () => rail.scrollBy({ left: -rail.clientWidth * .8, behavior: 'smooth' }));
+                                                                                                                                                                                                                                                          next.addEventListener('click', () => rail.scrollBy({ left: rail.clientWidth * .8, behavior: 'smooth' }));
+                                                                                                                                                                                                                                                                  rail.addEventListener('scroll', updateControls, { passive: true }); window.addEventListener('resize', updateControls); updateControls();
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                              document.querySelectorAll('.ii-footer__socials').forEach((socials) => { if (!socials.children.length && !socials.textContent.trim()) { const heading = socials.previousElementSibling; if (heading && heading.classList.contains('ii-footer__subheading')) heading.remove(); socials.remove(); } });
+                                                                                                                                                                                                                                                                                  };
+                                                                                                                                                                                                                                                                                      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initHomeFixes); else initHomeFixes();
+                                                                                                                                                                                                                                                                                        })();
+                                                                                                                                                                                                                                                                                        </script>
+                                                                                                                                                                                                                                                                                        
