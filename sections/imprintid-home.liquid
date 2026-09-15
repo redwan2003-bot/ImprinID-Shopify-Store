@@ -269,6 +269,45 @@
                                                               .ii-merch-card { width: 100%; height: 95px; }
                                                                 }
                                                                 </style>
+                                                                <style>
+                                                                  /* Measured desktop homepage layout */
+                                                                    .ii-home__shell { width: min(100% - 40px, 1499px) !important; max-width: 1499px !important; margin: 0 auto !important; }
+                                                                      .ii-hero { display: grid !important; grid-template-columns: 719px 699px !important; gap: 81px !important; height: 438px !important; min-height: 438px !important; }
+                                                                        .ii-hero__primary { width: 719px !important; height: 405px !important; min-height: 405px !important; }
+                                                                          .ii-hero__tiles { display: grid !important; width: 699px !important; height: 405px !important; min-height: 405px !important; grid-template-columns: 340px 340px !important; grid-template-rows: 187px 201px !important; gap: 17px 19px !important; }
+                                                                            .ii-hero-tile:first-child { grid-column: 1 / -1 !important; }
+                                                                              .ii-hero-tile__copy { display: none !important; }
+
+                                                                                .ii-brand-grid { width: 1200px !important; max-width: 1200px !important; grid-template-columns: repeat(4, 290px) !important; gap: 13.333px !important; }
+                                                                                  .ii-brand-card { width: 290px !important; height: 356px !important; grid-template-rows: 278px 78px !important; }
+                                                                                    .ii-brand-card__media { width: 290px !important; height: 278px !important; aspect-ratio: auto !important; }
+
+                                                                                      .ii-merch-grid { width: 1200px !important; max-width: 1200px !important; grid-template-columns: repeat(2, 580px) !important; grid-auto-rows: 95px !important; column-gap: 40px !important; row-gap: 145px !important; }
+                                                                                        .ii-merch-card { width: 580px !important; height: 95px !important; min-height: 95px !important; }
+
+                                                                                          .ii-product-rail { width: min(100%, 1484px) !important; max-width: 1484px !important; height: 155px !important; grid-auto-flow: column !important; grid-auto-columns: 174px !important; gap: 14px !important; overflow: hidden !important; }
+                                                                                            .ii-product-card { width: 174px !important; height: 155px !important; }
+                                                                                              .ii-product-card__media { height: 110px !important; }
+                                                                                                .ii-product-card__body { min-height: 45px !important; }
+
+                                                                                                  @media screen and (max-width: 1200px) {
+                                                                                                      .ii-hero { grid-template-columns: minmax(0, 719px) minmax(0, 699px) !important; gap: 24px !important; overflow: hidden !important; }
+                                                                                                          .ii-hero__primary, .ii-hero__tiles { width: 100% !important; }
+                                                                                                              .ii-brand-grid, .ii-merch-grid { width: 100% !important; max-width: 100% !important; }
+                                                                                                                  .ii-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+                                                                                                                      .ii-brand-card, .ii-brand-card__media, .ii-merch-card { width: 100% !important; }
+                                                                                                                        }
+                                                                                                                          @media screen and (max-width: 749px) {
+                                                                                                                              .ii-hero { display: block !important; height: auto !important; min-height: 438px !important; }
+                                                                                                                                  .ii-hero__primary { width: 100% !important; height: auto !important; min-height: 438px !important; }
+                                                                                                                                      .ii-hero__tiles { display: none !important; }
+                                                                                                                                          .ii-brand-grid, .ii-merch-grid { grid-template-columns: 1fr !important; row-gap: 16px !important; }
+                                                                                                                                              .ii-brand-card { height: auto !important; }
+                                                                                                                                                  .ii-brand-card__media { height: auto !important; aspect-ratio: 1.25 !important; }
+                                                                                                                                                      .ii-merch-card { height: 95px !important; }
+                                                                                                                                                        }
+                                                                                                                                                        </style>
+                                                                                                                                                        
                                                                 
                                                                 {% schema %}
 {
