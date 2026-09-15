@@ -241,7 +241,36 @@
   }
 {% endstylesheet %}
 
-{% schema %}
+<style>
+    /* Desktop dimensions requested for the homepage layout */
+      .ii-hero { display: block; }
+        .ii-hero__primary { width: min(1499px, 100%); height: 438px; }
+          .ii-hero__tiles { display: none; }
+          
+            .ii-brand-grid { grid-template-columns: repeat(4, 290px); gap: 15px; }
+              .ii-brand-card { width: 290px; height: 356px; grid-template-rows: minmax(0, 1fr) auto; }
+                .ii-brand-card__media { height: 278px; aspect-ratio: auto; }
+                
+                  .ii-merch-grid { grid-template-columns: repeat(2, 580px); gap: 16px; }
+                    .ii-merch-card { width: 580px; height: 95px; }
+                    
+                      @media screen and (max-width: 1200px) {
+                          .ii-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                              .ii-brand-card { width: 100%; }
+                                  .ii-merch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                                      .ii-merch-card { width: 100%; }
+                                        }
+                                        
+                                          @media screen and (max-width: 749px) {
+                                              .ii-hero__primary { height: auto; min-height: 438px; }
+                                                  .ii-brand-grid, .ii-merch-grid { grid-template-columns: 1fr; }
+                                                      .ii-brand-card { width: 100%; height: auto; }
+                                                          .ii-brand-card__media { height: auto; aspect-ratio: 1.25; }
+                                                              .ii-merch-card { width: 100%; height: 95px; }
+                                                                }
+                                                                </style>
+                                                                
+                                                                {% schema %}
 {
   "name": "ImprintID homepage",
   "tag": "section",
