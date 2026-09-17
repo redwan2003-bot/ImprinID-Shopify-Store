@@ -26,12 +26,15 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button"
+            "picker_type": "dropdown"
           }
+        },
+        "dynamic_pricing": {
+          "type": "@app",
+          "settings": {}
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "disabled": true,
           "settings": {}
         },
         "price": {
@@ -61,6 +64,7 @@
         "title",
         "vendor",
         "variant_picker",
+        "dynamic_pricing",
         "quantity_selector",
         "price",
         "buy_buttons",
@@ -69,10 +73,10 @@
       ],
       "settings": {
         "enable_sticky_info": true,
-        "media_size": "large",
+        "media_size": "medium",
         "constrain_to_viewport": true,
         "media_fit": "cover",
-        "gallery_layout": "stacked",
+        "gallery_layout": "thumbnail",
         "media_position": "left",
         "image_zoom": "none",
         "mobile_thumbnails": "hide",
