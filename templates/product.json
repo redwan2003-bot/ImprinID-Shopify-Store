@@ -26,15 +26,12 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "dropdown"
+            "picker_type": "button"
           }
-        },
-        "dynamic_pricing": {
-          "type": "@app",
-          "settings": {}
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "price": {
@@ -64,7 +61,6 @@
         "title",
         "vendor",
         "variant_picker",
-        "dynamic_pricing",
         "quantity_selector",
         "price",
         "buy_buttons",
@@ -73,10 +69,10 @@
       ],
       "settings": {
         "enable_sticky_info": true,
-        "media_size": "medium",
+        "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "cover",
-        "gallery_layout": "thumbnail",
+        "gallery_layout": "stacked",
         "media_position": "left",
         "image_zoom": "none",
         "mobile_thumbnails": "hide",
@@ -102,10 +98,30 @@
         "padding_top": 48,
         "padding_bottom": 28
       }
+    },
+    "1789675545762053ac": {
+      "type": "apps",
+      "blocks": {
+        "imprintid_dynamic_pricing_dynamic_pricing_QNMHfp": {
+          "type": "shopify://apps/imprintid-dynamic-pricing/blocks/dynamic-pricing/01a0916f-8d94-719c-8274-ba7b695b3662",
+          "settings": {
+            "product": "{{product}}",
+            "sku_override": "",
+            "show_breakdown_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "imprintid_dynamic_pricing_dynamic_pricing_QNMHfp"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
+    "1789675545762053ac",
     "related-products"
   ]
 }
