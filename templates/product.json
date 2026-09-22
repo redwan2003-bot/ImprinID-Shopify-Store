@@ -29,10 +29,12 @@
             "picker_type": "dropdown"
           }
         },
-        "test_text": {
-          "type": "text",
+        "dynamic_pricing": {
+          "type": "dynamic_pricing",
           "settings": {
-            "text": "Antigravity Test Text Block"
+            "product": "",
+            "sku_override": "",
+            "show_breakdown_by_default": true
           }
         },
         "quantity_selector": {
@@ -69,7 +71,7 @@
         "title",
         "vendor",
         "variant_picker",
-        "test_text",
+        "dynamic_pricing",
         "quantity_selector",
         "price",
         "buy_buttons",

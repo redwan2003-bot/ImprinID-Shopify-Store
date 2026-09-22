@@ -73,6 +73,10 @@
           {%- case block.type -%}
             {%- when '@app' -%}
               {% render block %}
+            {%- when 'dynamic_pricing' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'dynamic-pricing', block: block %}
+              </div>
             {%- when 'text' -%}
               <p
                 class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
@@ -581,6 +585,29 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "dynamic_pricing",
+      "name": "Dynamic Pricing",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "sku_override",
+          "label": "Override SKU",
+          "info": "Leave blank to use the current product's SKU automatically."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_breakdown_by_default",
+          "label": "Expand price breakdown by default",
+          "default": false
+        }
+      ]
     },
     {
       "type": "text",
