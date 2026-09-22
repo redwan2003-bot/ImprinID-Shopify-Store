@@ -29,14 +29,6 @@
             "picker_type": "dropdown"
           }
         },
-        "dynamic_pricing": {
-          "type": "shopify://apps/imprintid-dynamic-pricing/blocks/dynamic-pricing/01a0916f-8d94-719c-8274-ba7b695b3662",
-          "settings": {
-            "product": "",
-            "sku_override": "",
-            "show_breakdown_by_default": true
-          }
-        },
         "quantity_selector": {
           "type": "quantity_selector",
           "disabled": true,
@@ -71,7 +63,6 @@
         "title",
         "vendor",
         "variant_picker",
-        "dynamic_pricing",
         "quantity_selector",
         "price",
         "buy_buttons",
