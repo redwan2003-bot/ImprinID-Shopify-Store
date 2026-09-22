@@ -263,17 +263,17 @@
         </button>
         <button
           type="button"
-          class="imprintid-pricing__btn imprintid-pricing__btn--secondary"
-          data-imprintid-pricing-request-info
-        >
-          {{ 'dynamic_pricing.request_info' | t | default: 'Request Info' }}
-        </button>
-        <button
-          type="button"
-          class="imprintid-pricing__btn imprintid-pricing__btn--secondary"
+          class="imprintid-pricing__btn imprintid-pricing__btn--secondary imprintid-pricing__btn--quote"
           data-imprintid-pricing-request-quote
         >
           {{ 'dynamic_pricing.request_quote' | t | default: 'Request Quote' }}
+        </button>
+        <button
+          type="button"
+          class="imprintid-pricing__btn imprintid-pricing__btn--tertiary imprintid-pricing__btn--info"
+          data-imprintid-pricing-request-info
+        >
+          {{ 'dynamic_pricing.request_info' | t | default: 'Request Info' }}
         </button>
       </div>
       <p class="imprintid-pricing__add-to-cart-status" data-imprintid-pricing-add-to-cart-status aria-live="polite"></p>
