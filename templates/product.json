@@ -71,6 +71,7 @@
         "title",
         "vendor",
         "variant_picker",
+        "dynamic_pricing",
         "quantity_selector",
         "price",
         "buy_buttons",
