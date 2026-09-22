@@ -29,12 +29,10 @@
             "picker_type": "dropdown"
           }
         },
-        "dynamic_pricing": {
-          "type": "shopify://apps/imprintid-dynamic-pricing/blocks/dynamic-pricing/b0cdeb12-7683-a1dc-de5d-06e28743ca803481c26d",
+        "test_text": {
+          "type": "text",
           "settings": {
-            "product": "",
-            "sku_override": "",
-            "show_breakdown_by_default": true
+            "text": "Antigravity Test Text Block"
           }
         },
         "quantity_selector": {
@@ -71,7 +69,7 @@
         "title",
         "vendor",
         "variant_picker",
-        "dynamic_pricing",
+        "test_text",
         "quantity_selector",
         "price",
         "buy_buttons",
