@@ -34,6 +34,22 @@
   box-sizing: inherit;
 }
 
+/* Form controls keep their own box model in some themes; force border-box so `width: 100%`
+   includes padding and border instead of overflowing the card it sits in. */
+.imprintid-pricing input,
+.imprintid-pricing select,
+.imprintid-pricing textarea,
+.imprintid-pricing button,
+.imprintid-pricing summary {
+  box-sizing: border-box;
+}
+
+/* Author `display` rules (e.g. the flex panel) otherwise beat the UA `[hidden]` rule, so
+   a "hidden" panel, fieldset or message would still render. */
+.imprintid-pricing [hidden] {
+  display: none !important;
+}
+
 .imprintid-pricing__heading {
   display: none;
 }
@@ -53,7 +69,7 @@
 
 .imprintid-pricing__main-controls {
   display: grid;
-  grid-template-columns: minmax(10.5rem, 11.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem;
 }
 
@@ -302,8 +318,13 @@
   margin: 0.65rem 0 0;
 }
 
+/* The Attachments and Optional Features cards sit beneath the quantity row, full width, and
+   share a row when they are wide enough (an open card no longer squeezes into a side column). */
 .imprintid-pricing__main-controls > .imprintid-pricing__options {
-  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  align-items: start;
+  gap: 0.65rem;
 }
 
 /* --- Production field ----------------------------------------------------- */
@@ -816,5 +837,32 @@
 
   .imprintid-pricing__btn {
     width: 100%;
+  }
+}
+
+/* Honeypot for the inquiry forms: present for bots, invisible and unreachable for people. */
+.imprintid-pricing__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.imprintid-pricing__modal-error {
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--imprintid-radius);
+  background: var(--imprintid-error-bg);
+  color: var(--imprintid-error);
+  font-size: 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imprintid-pricing *,
+  .imprintid-pricing *::before,
+  .imprintid-pricing *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }
