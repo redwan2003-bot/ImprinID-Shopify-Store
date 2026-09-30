@@ -1,6 +1,214 @@
+{% doc %}
+  @prompt
+    enter using password
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-password-entry-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 32px 24px;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__inner {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__title {
+    margin: 0 0 10px;
+    color: inherit;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__message {
+    margin: 0 0 24px;
+    color: inherit;
+    line-height: 1.5;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__label {
+    color: inherit;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid {{ block.settings.text_color }};
+    border-radius: 2px;
+    background: {{ block.settings.input_background }};
+    color: {{ block.settings.text_color }};
+    font: inherit;
+    box-sizing: border-box;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__input:focus-visible,
+  .ai-password-entry-{{ ai_gen_id }}__button:focus-visible {
+    outline: 3px solid {{ block.settings.text_color }};
+    outline-offset: 3px;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__button {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 1px solid {{ block.settings.button_background }};
+    border-radius: 2px;
+    background: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .ai-password-entry-{{ ai_gen_id }}__error {
+    margin: 0;
+    color: {{ block.settings.error_color }};
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-password-entry-{{ ai_gen_id }} {
+      width: {{ block.settings.desktop_width_percent }}%;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-password-entry-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-password-entry-{{ ai_gen_id }}__inner">
+    {% if block.settings.heading != blank %}
+      <h1 class="ai-password-entry-{{ ai_gen_id }}__title">{{ block.settings.heading | escape }}</h1>
+    {% endif %}
+    {% if block.settings.message != blank %}
+      <p class="ai-password-entry-{{ ai_gen_id }}__message">{{ block.settings.message | escape }}</p>
+    {% endif %}
+    {% form 'storefront_password' %}
+      <div class="ai-password-entry-{{ ai_gen_id }}__form">
+        <label class="ai-password-entry-{{ ai_gen_id }}__label" for="Password-{{ ai_gen_id }}">{{ block.settings.password_label | escape }}</label>
+        <input
+          class="ai-password-entry-{{ ai_gen_id }}__input"
+          type="password"
+          name="password"
+          id="Password-{{ ai_gen_id }}"
+          autocomplete="current-password"
+          required
+          {% if form.errors %}aria-invalid="true" aria-describedby="PasswordError-{{ ai_gen_id }}"{% endif %}
+        >
+        <button class="ai-password-entry-{{ ai_gen_id }}__button" type="submit">{{ block.settings.button_label | escape }}</button>
+        {% if form.errors %}
+          <p class="ai-password-entry-{{ ai_gen_id }}__error" id="PasswordError-{{ ai_gen_id }}" role="alert">{{ block.settings.error_message | escape }}</p>
+        {% endif %}
+      </div>
+    {% endform %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Password entry",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Enter using password"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Enter the store password to continue."
+    },
+    {
+      "type": "text",
+      "id": "password_label",
+      "label": "Password label",
+      "default": "Store password"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Enter"
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "The password you entered is incorrect. Please try again."
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAFAF9"
+    },
+    {
+      "type": "color",
+      "id": "input_background",
+      "label": "Input background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "error_color",
+      "label": "Error text",
+      "default": "#B42318"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Password entry"
+    }
+  ],
+  "tag": null,
+  "class": "password-entry-block"
+}
 {% endschema %}
