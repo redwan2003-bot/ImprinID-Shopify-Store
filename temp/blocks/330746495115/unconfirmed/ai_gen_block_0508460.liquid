@@ -1,0 +1,149 @@
+{% doc %}
+  @prompt
+    enter your password section on the banner email signup banner ...make sure this section is visible
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-password-banner-{{ ai_gen_id }} {
+    display: block;
+    box-sizing: border-box;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 32px 24px;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    text-align: center;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__content {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__heading {
+    margin: 0 0 10px;
+    color: inherit;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__message {
+    margin: 0 0 20px;
+    color: inherit;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__form {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__input {
+    box-sizing: border-box;
+    flex: 1 1 240px;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid {{ block.settings.text_color }};
+    border-radius: 2px;
+    background: #ffffff;
+    color: #121212;
+    font: inherit;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__button {
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 1px solid {{ block.settings.button_color }};
+    border-radius: 2px;
+    background: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__input:focus-visible,
+  .ai-password-banner-{{ ai_gen_id }}__button:focus-visible {
+    outline: 3px solid {{ block.settings.text_color }};
+    outline-offset: 3px;
+  }
+
+  .ai-password-banner-{{ ai_gen_id }}__error {
+    margin: 14px 0 0;
+    color: {{ block.settings.text_color }};
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 600px) {
+    .ai-password-banner-{{ ai_gen_id }} {
+      padding: 26px 18px;
+    }
+
+    .ai-password-banner-{{ ai_gen_id }}__form {
+      flex-direction: column;
+    }
+
+    .ai-password-banner-{{ ai_gen_id }}__input,
+    .ai-password-banner-{{ ai_gen_id }}__button {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-password-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-password-banner-{{ ai_gen_id }}__content">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-password-banner-{{ ai_gen_id }}__heading">{{ block.settings.heading | escape }}</h2>
+    {% endif %}
+    {% if block.settings.message != blank %}
+      <p class="ai-password-banner-{{ ai_gen_id }}__message">{{ block.settings.message | escape }}</p>
+    {% endif %}
+    {% form 'storefront_password' %}
+      <div class="ai-password-banner-{{ ai_gen_id }}__form">
+        <label class="visually-hidden" for="Password-{{ ai_gen_id }}">{{ block.settings.input_label | escape }}</label>
+        <input
+          id="Password-{{ ai_gen_id }}"
+          class="ai-password-banner-{{ ai_gen_id }}__input"
+          type="password"
+          name="password"
+          placeholder="{{ block.settings.input_label | escape }}"
+          autocomplete="current-password"
+          required
+          {% if form.errors %}aria-invalid="true" aria-describedby="Password-error-{{ ai_gen_id }}"{% endif %}
+        >
+        <button class="ai-password-banner-{{ ai_gen_id }}__button" type="submit">{{ block.settings.button_label | escape }}</button>
+      </div>
+      {% if form.errors %}
+        <p id="Password-error-{{ ai_gen_id }}" class="ai-password-banner-{{ ai_gen_id }}__error" role="alert">{{ block.settings.error_message | escape }}</p>
+      {% endif %}
+    {% endform %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Password entry banner",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Enter your password" },
+    { "type": "text", "id": "message", "label": "Message", "default": "This store is opening soon. Enter the password to continue." },
+    { "type": "text", "id": "input_label", "label": "Password field label", "default": "Enter password" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Enter" },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "That password did not match. Please try again." },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F3F3F3" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#121212" },
+    { "type": "color", "id": "button_color", "label": "Button background", "default": "#121212" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#FFFFFF" }
+  ],
+  "presets": [
+    { "name": "Password entry banner" }
+  ],
+  "tag": null,
+  "class": "password-entry-banner"
+}
+{% endschema %}
