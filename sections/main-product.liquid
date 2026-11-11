@@ -5,6 +5,7 @@
 >
 {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
 {{ 'imprintid-product-info.css' | asset_url | stylesheet_tag }}
+  {{ 'sage-product-standard.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
@@ -28,6 +29,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer" type="module"></script>
+  <script src="{{ 'sage-product-standard.js' | asset_url }}" defer="defer"></script>
   {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
   {% endif %}
@@ -77,6 +79,8 @@
               <div {{ block.shopify_attributes }}>
                 {% render 'dynamic-pricing', block: block %}
               </div>
+            {%- when 'sage_details' -%}
+              {% render 'sage-product-details', product: product, block: block %}
             {%- when 'text' -%}
               <p
                 class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
@@ -608,6 +612,12 @@
           "default": false
         }
       ]
+    },
+    {
+      "type": "sage_details",
+      "name": "Standard product details",
+      "limit": 1,
+      "settings": []
     },
     {
       "type": "text",

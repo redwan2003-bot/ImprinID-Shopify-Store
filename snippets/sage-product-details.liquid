@@ -1,0 +1,82 @@
+{% doc %}
+  Renders the standard promotional-product metadata and detail tabs.
+  @param {product} product - Product shown on the page.
+  @param {block} block - Theme block metadata.
+{% enddoc %}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign share_url = request.origin | append: product.url -%}
+{%- assign email_subject = product.title | url_encode -%}
+{%- assign email_body = share_url | url_encode -%}
+
+<div class="sage-product-standard" data-sage-product-standard {{ block.shopify_attributes }}>
+  <div class="sage-product-standard__meta">
+    <p class="sage-product-standard__sku">
+      <strong>{{ 'products.product.sage.item_number' | t }}</strong>
+      <span data-sage-product-sku>{{ current_variant.sku | default: product.handle | escape }}</span>
+    </p>
+    <div class="sage-product-standard__actions" aria-label="{{ 'products.product.sage.product_actions' | t }}">
+      <button type="button" data-sage-share data-share-url="{{ share_url }}" data-copied-label="{{ 'products.product.sage.link_copied' | t }}">{{ 'products.product.sage.share' | t }}</button>
+      <button type="button" data-sage-print>{{ 'products.product.sage.print' | t }}</button>
+      <a href="mailto:?subject={{ email_subject }}&body={{ email_body }}">{{ 'products.product.sage.email' | t }}</a>
+    </div>
+  </div>
+
+  <p class="sage-product-standard__stock{% unless current_variant.available %} sage-product-standard__stock--unavailable{% endunless %}" data-sage-stock>
+    {%- if current_variant.available -%}
+      {{ 'products.product.sage.in_stock' | t }}
+    {%- else -%}
+      {{ 'products.product.sage.out_of_stock' | t }}
+    {%- endif -%}
+  </p>
+
+  <div class="sage-product-standard__tabs" role="tablist" aria-label="{{ 'products.product.sage.details' | t }}">
+    <button type="button" role="tab" id="sage-overview-{{ section.id }}" aria-controls="sage-panel-overview-{{ section.id }}" aria-selected="true" tabindex="0">{{ 'products.product.sage.overview' | t }}</button>
+    <button type="button" role="tab" id="sage-colors-{{ section.id }}" aria-controls="sage-panel-colors-{{ section.id }}" aria-selected="false" tabindex="-1">{{ 'products.product.sage.colors' | t }}</button>
+    <button type="button" role="tab" id="sage-imprint-{{ section.id }}" aria-controls="sage-panel-imprint-{{ section.id }}" aria-selected="false" tabindex="-1">{{ 'products.product.sage.imprint' | t }}</button>
+    <button type="button" role="tab" id="sage-options-{{ section.id }}" aria-controls="sage-panel-options-{{ section.id }}" aria-selected="false" tabindex="-1">{{ 'products.product.sage.options' | t }}</button>
+    <button type="button" role="tab" id="sage-delivery-{{ section.id }}" aria-controls="sage-panel-delivery-{{ section.id }}" aria-selected="false" tabindex="-1">{{ 'products.product.sage.delivery' | t }}</button>
+  </div>
+
+  <div class="sage-product-standard__panels">
+    <section role="tabpanel" id="sage-panel-overview-{{ section.id }}" aria-labelledby="sage-overview-{{ section.id }}">
+      <div class="rte">{{ product.description }}</div>
+    </section>
+    <section role="tabpanel" id="sage-panel-colors-{{ section.id }}" aria-labelledby="sage-colors-{{ section.id }}" hidden>
+      {%- assign has_colors = false -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign option_name = option.name | downcase -%}
+        {%- if option_name contains 'color' or option_name contains 'colour' -%}
+          {%- assign has_colors = true -%}
+          <p>{{ option.values | join: ', ' }}</p>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- unless has_colors -%}<p>{{ 'products.product.sage.colors_prompt' | t }}</p>{%- endunless -%}
+    </section>
+    <section role="tabpanel" id="sage-panel-imprint-{{ section.id }}" aria-labelledby="sage-imprint-{{ section.id }}" hidden>
+      {%- if product.metafields.custom.imprint_information != blank -%}
+        <div class="rte">{{ product.metafields.custom.imprint_information | metafield_tag }}</div>
+      {%- else -%}
+        <p>{{ 'products.product.sage.imprint_prompt' | t }}</p>
+      {%- endif -%}
+    </section>
+    <section role="tabpanel" id="sage-panel-options-{{ section.id }}" aria-labelledby="sage-options-{{ section.id }}" hidden>
+      {%- assign has_options = false -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign option_name = option.name | downcase -%}
+        {%- unless option_name contains 'color' or option_name contains 'colour' or option.name == 'Title' -%}
+          {%- assign has_options = true -%}
+          <p><strong>{{ option.name }}:</strong> {{ option.values | join: ', ' }}</p>
+        {%- endunless -%}
+      {%- endfor -%}
+      {%- unless has_options -%}<p>{{ 'products.product.sage.options_prompt' | t }}</p>{%- endunless -%}
+    </section>
+    <section role="tabpanel" id="sage-panel-delivery-{{ section.id }}" aria-labelledby="sage-delivery-{{ section.id }}" hidden>
+      {%- if product.metafields.custom.delivery_information != blank -%}
+        <div class="rte">{{ product.metafields.custom.delivery_information | metafield_tag }}</div>
+      {%- else -%}
+        <p>{{ 'products.product.sage.delivery_prompt' | t }}</p>
+      {%- endif -%}
+    </section>
+  </div>
+</div>

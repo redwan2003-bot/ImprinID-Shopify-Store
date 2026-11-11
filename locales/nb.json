@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -106,7 +115,26 @@
   },
   "products": {
     "product": {
-      "add_to_cart": "Legg i handlekurv",
+      "sage": {
+        "item_number": "Item #",
+        "product_actions": "Product actions",
+        "share": "Share",
+        "print": "Print",
+        "email": "Email",
+        "link_copied": "Link copied",
+        "in_stock": "In stock",
+        "out_of_stock": "Out of stock",
+        "details": "Product details",
+        "overview": "Overview",
+        "colors": "Colors",
+        "imprint": "Imprint",
+        "options": "Options",
+        "delivery": "Delivery",
+        "colors_prompt": "Available colors are shown in the product selector and pricing options below.",
+        "imprint_prompt": "Decoration and imprint choices are shown with the pricing options below.",
+        "options_prompt": "Available attachments and optional features are shown with the pricing options below.",
+        "delivery_prompt": "Production timing is shown with the pricing options below. Contact us for a confirmed in-hand date."
+      },      "add_to_cart": "Legg i handlekurv",
       "description": "Beskrivelse",
       "on_sale": "Salg",
       "product_variants": "Produktvarianter",
