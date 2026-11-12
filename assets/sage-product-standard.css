@@ -147,6 +147,25 @@
   }
 
   .sage-product-standard__tabs {
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    overflow: visible;
+    border: 1px solid rgba(var(--color-foreground), 0.18);
+    border-radius: 6px;
+  }
+
+  .sage-product-standard__tabs button {
+    min-width: 0;
+    min-height: 42px;
+    padding: 0.65rem 0.35rem;
+    border-right: 1px solid rgba(var(--color-foreground), 0.12);
+    border-bottom-width: 3px;
+    font-size: 1.15rem;
+    white-space: normal;
+  }
+
+  .sage-product-standard__tabs button:nth-child(3n) {
+    border-right: 0;
   }
 }

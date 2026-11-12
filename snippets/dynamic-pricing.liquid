@@ -129,6 +129,7 @@
       <div class="imprintid-pricing__main-controls">
         <div class="imprintid-pricing__grid-row">
           <div class="imprintid-pricing__field imprintid-pricing__field--qty">
+            <label for="imprintid-pricing-quantity-{{ block.id }}">{{ 'dynamic_pricing.quantity_label' | t | default: 'Quantity' }}</label>
             <input
               type="number"
               id="imprintid-pricing-quantity-{{ block.id }}"
@@ -138,7 +139,7 @@
               min="1"
               step="1"
               inputmode="numeric"
-              placeholder="{{ 'dynamic_pricing.qty_placeholder' | t | default: 'Qty*' }}"
+              placeholder="{{ 'dynamic_pricing.qty_placeholder' | t | default: 'Enter quantity' }}"
               aria-label="{{ 'dynamic_pricing.quantity_label' | t }}"
               aria-describedby="imprintid-pricing-quantity-error-{{ block.id }}"
             >

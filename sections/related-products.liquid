@@ -41,6 +41,35 @@
           </li>
         {% endfor %}
       </ul>
+    {% elsif recommendations.performed %}
+      {%- assign fallback_collection = collections['all-lanyards-id-products'] -%}
+      {%- if fallback_collection != blank and fallback_collection.products_count > 1 -%}
+        <h2 class="related-products__heading {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+        <ul
+          class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+          role="list"
+        >
+          {%- assign fallback_count = 0 -%}
+          {%- for fallback_product in fallback_collection.products -%}
+            {%- unless fallback_product.id == product.id -%}
+              {%- if fallback_count < section.settings.products_to_show -%}
+                <li class="grid__item">
+                  {% render 'card-product',
+                    card_product: fallback_product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating
+                  %}
+                </li>
+                {%- assign fallback_count = fallback_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     {% endif %}
   </product-recommendations>
 </div>

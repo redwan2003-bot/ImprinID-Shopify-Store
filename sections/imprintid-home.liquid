@@ -137,7 +137,13 @@
             </a>
             <div class="ii-product-card__body">
               <a href="{{ product.url }}">{{ product.title }}</a>
-              <span>{{ product.price | money }}</span>
+              <span>
+                {%- if product.price == 0 -%}
+                  Configure for pricing
+                {%- else -%}
+                  {{ product.price | money }}
+                {%- endif -%}
+              </span>
             </div>
           </article>
         {% endfor %}
@@ -166,9 +172,10 @@
   .ii-hero__primary, .ii-hero-tile, .ii-merch-card { position: relative; display: block; overflow: hidden; color: #fff; text-decoration: none; background: #e8e8e8; }
   .ii-hero__primary > img, .ii-hero-tile > img, .ii-merch-card > img, .ii-placeholder { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .55s ease; }
   .ii-hero__primary:hover > img, .ii-hero-tile:hover > img, .ii-merch-card:hover > img { transform: scale(1.025); }
-  .ii-hero__shade, .ii-hero-tile__shade, .ii-merch-card__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / .56), rgb(0 0 0 / .08) 65%); }
+  .ii-hero__shade, .ii-hero-tile__shade, .ii-merch-card__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / .76), rgb(0 0 0 / .18) 68%, rgb(0 0 0 / .08)); }
   .ii-hero__copy { position: absolute; left: clamp(28px, 4vw, 70px); bottom: clamp(34px, 5vw, 72px); width: min(520px, calc(100% - 60px)); display: grid; justify-items: start; gap: 12px; }
-  .ii-hero__copy strong { max-width: 470px; font-size: clamp(36px, 4.3vw, 68px); line-height: .98; letter-spacing: -.035em; }
+  .ii-hero__heading { max-width: 470px; margin: 0; color: #fff; font-size: clamp(36px, 4.3vw, 68px); line-height: .98; letter-spacing: -.035em; text-shadow: 0 2px 18px rgb(0 0 0 / .35); }
+  .ii-hero__copy { color: #fff; text-shadow: 0 1px 10px rgb(0 0 0 / .35); }
   .ii-hero__copy > span:not(.ii-button):not(.ii-hero__eyebrow) { font-size: 17px; line-height: 1.5; }
   .ii-hero__eyebrow { color: #fff; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
   .ii-hero__tiles { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; }

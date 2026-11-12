@@ -47,7 +47,11 @@
     <div class="price__regular">
       <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
       <span class="price-item price-item--regular">
-        {{ money_price }}
+        {%- if price == 0 -%}
+          Configure for pricing
+        {%- else -%}
+          {{ money_price }}
+        {%- endif -%}
       </span>
     </div>
     <div class="price__sale">
